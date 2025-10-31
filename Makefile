@@ -1,7 +1,3 @@
-PKG_VERSION = v1.11.0
-TALOS_VERSION = v1.11.5
-SBCOVERLAY_VERSION = main
-
 REGISTRY ?= ghcr.io
 REGISTRY_USERNAME ?= wittenbude
 PUSH ?= true
@@ -9,10 +5,6 @@ PUSH ?= true
 TAG ?= $(shell git describe --tags --exact-match)
 
 EXTENSIONS ?= ghcr.io/siderolabs/iscsi-tools:v0.2.0
-
-PKG_REPOSITORY = https://github.com/siderolabs/pkgs.git
-TALOS_REPOSITORY = https://github.com/siderolabs/talos.git
-SBCOVERLAY_REPOSITORY = https://github.com/talos-rpi5/sbc-raspberrypi5.git
 
 CHECKOUTS_DIRECTORY := $(PWD)/checkouts
 PATCHES_DIRECTORY := $(PWD)/patches
@@ -26,29 +18,12 @@ SBCOVERLAY_TAG = $(shell cd $(CHECKOUTS_DIRECTORY)/sbc-raspberrypi5 && git descr
 #
 .PHONY: help
 help:
-	@echo "checkouts : Clone repositories required for the build"
 	@echo "patches   : Apply all patches"
 	@echo "kernel    : Build kernel"
 	@echo "overlay   : Build Raspberry Pi 5 overlay"
 	@echo "installer : Build installer docker image and disk image"
 	@echo "release   : Use only when building the final release, this will tag relevant images with the current Git tag."
 	@echo "clean     : Clean up any remains"
-
-
-
-#
-# Checkouts
-#
-.PHONY: checkouts checkouts-clean
-checkouts:
-	git clone -c advice.detachedHead=false --branch "$(PKG_VERSION)" "$(PKG_REPOSITORY)" "$(CHECKOUTS_DIRECTORY)/pkgs"
-	git clone -c advice.detachedHead=false --branch "$(TALOS_VERSION)" "$(TALOS_REPOSITORY)" "$(CHECKOUTS_DIRECTORY)/talos"
-	git clone -c advice.detachedHead=false --branch "$(SBCOVERLAY_VERSION)" "$(SBCOVERLAY_REPOSITORY)" "$(CHECKOUTS_DIRECTORY)/sbc-raspberrypi5"
-
-checkouts-clean:
-	rm -rf "$(CHECKOUTS_DIRECTORY)/pkgs"
-	rm -rf "$(CHECKOUTS_DIRECTORY)/talos"
-	rm -rf "$(CHECKOUTS_DIRECTORY)/sbc-raspberrypi5"
 
 
 
@@ -126,11 +101,3 @@ release:
 	docker pull $(REGISTRY)/$(REGISTRY_USERNAME)/installer:$(TALOS_TAG) && \
 		docker tag $(REGISTRY)/$(REGISTRY_USERNAME)/installer:$(TALOS_TAG) $(REGISTRY)/$(REGISTRY_USERNAME)/installer:$(TAG) && \
 		docker push $(REGISTRY)/$(REGISTRY_USERNAME)/installer:$(TAG)
-
-
-
-#
-# Clean
-#
-.PHONY: clean
-clean: checkouts-clean

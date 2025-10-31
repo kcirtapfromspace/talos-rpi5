@@ -1,5 +1,5 @@
 # Raspberry Pi 5 Talos Builder
-This repository serves as the glue to build custom Talos images for the Raspberry Pi 5. It patches the Kernel and Talos build process to use the Linux Kernel source provided by [raspberrypi/linux](https://github.com/raspberrypi/linux). 
+This repository serves as the glue to build custom Talos images for the Raspberry Pi 5. It patches the Kernel and Talos build process to use the Linux Kernel source provided by [raspberrypi/linux](https://github.com/raspberrypi/linux).
 
 ## Tested on
 So far, this release has been verified on:
@@ -14,7 +14,7 @@ So far, this release has been verified on:
 * Booting from USB: USB is only available once LINUX has booted up but not in U-Boot.
 
 ## How to use?
-The releases on this repository align with the corresponding Talos version. There is a raw disk image (initial setup) and an installer image (upgrades) provided. 
+The releases on this repository align with the corresponding Talos version. There is a raw disk image (initial setup) and an installer image (upgrades) provided.
 
 ### Examples
 Initial:
@@ -36,7 +36,7 @@ If you'd like to make modifications, it is possible to create your own build. Be
 
 ```
 # Clones all dependencies and applies the necessary patches
-make checkouts patches
+make patches
 
 # Builds the Linux Kernel (can take a while)
 make REGISTRY=ghcr.io REGISTRY_USERNAME=<username> kernel

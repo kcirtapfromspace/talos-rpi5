@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Setup Crane
         uses: imjasonh/setup-crane@v0.4
         with:
@@ -35,8 +37,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Prepare (checkouts & patches)
-        run: make checkouts patches
+      - name: Apply Patches
+        run: make patches
 
       - name: Kernel
         run: make kernel
