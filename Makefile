@@ -6,12 +6,9 @@ TAG ?= $(shell git describe --tags --exact-match)
 
 EXTENSIONS ?= ghcr.io/siderolabs/iscsi-tools:v0.2.0
 
-CHECKOUTS_DIRECTORY := $(PWD)/checkouts
-PATCHES_DIRECTORY := $(PWD)/patches
-
-PKGS_TAG = $(shell cd $(CHECKOUTS_DIRECTORY)/pkgs && git describe --tag --always --dirty --match v[0-9]\*)
-TALOS_TAG = $(shell cd $(CHECKOUTS_DIRECTORY)/talos && git describe --tag --always --dirty --match v[0-9]\*)
-SBCOVERLAY_TAG = $(shell cd $(CHECKOUTS_DIRECTORY)/sbc-raspberrypi5 && git describe --tag --always --dirty)-$(PKGS_TAG)
+PKGS_TAG = $(shell cd checkouts/pkgs && git describe --tag --always --dirty --match v[0-9]\*)
+TALOS_TAG = $(shell cd checkouts/talos && git describe --tag --always --dirty --match v[0-9]\*)
+SBCOVERLAY_TAG = $(shell cd checkouts/sbc-raspberrypi5 && git describe --tag --always --dirty)-$(PKGS_TAG)
 
 #
 # Help
@@ -32,12 +29,12 @@ help:
 #
 .PHONY: patches-pkgs patches-talos patches
 patches-pkgs:
-	cd "$(CHECKOUTS_DIRECTORY)/pkgs" && \
-		git am "$(PATCHES_DIRECTORY)/siderolabs/pkgs/0001-Patched-for-Raspberry-Pi-5.patch"
+	cd "checkouts/pkgs" && \
+		git am "$(PWD)/patches/siderolabs/pkgs/0001-Patched-for-Raspberry-Pi-5.patch"
 
 patches-talos:
-	cd "$(CHECKOUTS_DIRECTORY)/talos" && \
-		git am "$(PATCHES_DIRECTORY)/siderolabs/talos/0001-Patched-for-Raspberry-Pi-5.patch"
+	cd "checkouts/talos" && \
+		git am "$(PWD)/patches/siderolabs/talos/0001-Patched-for-Raspberry-Pi-5.patch"
 
 patches: patches-pkgs patches-talos
 
@@ -48,7 +45,7 @@ patches: patches-pkgs patches-talos
 #
 .PHONY: kernel
 kernel:
-	cd "$(CHECKOUTS_DIRECTORY)/pkgs" && \
+	cd "checkouts/pkgs" && \
 		$(MAKE) \
 			REGISTRY=$(REGISTRY) USERNAME=$(REGISTRY_USERNAME) PUSH=$(PUSH) \
 			PLATFORM=linux/arm64 \
@@ -62,7 +59,7 @@ kernel:
 .PHONY: overlay
 overlay:
 	@echo SBCOVERLAY_TAG = $(SBCOVERLAY_TAG)
-	cd "$(CHECKOUTS_DIRECTORY)/sbc-raspberrypi5" && \
+	cd "checkouts/sbc-raspberrypi5" && \
 		$(MAKE) \
 			REGISTRY=$(REGISTRY) USERNAME=$(REGISTRY_USERNAME) IMAGE_TAG=$(SBCOVERLAY_TAG) PUSH=$(PUSH) \
 			PKGS_PREFIX=$(REGISTRY)/$(REGISTRY_USERNAME) PKGS=$(PKGS_TAG) \
@@ -76,7 +73,7 @@ overlay:
 #
 .PHONY: installer
 installer:
-	cd "$(CHECKOUTS_DIRECTORY)/talos" && \
+	cd "checkouts/talos" && \
 		$(MAKE) \
 			REGISTRY=$(REGISTRY) USERNAME=$(REGISTRY_USERNAME) PUSH=$(PUSH) \
 			PKG_KERNEL=$(REGISTRY)/$(REGISTRY_USERNAME)/kernel:$(PKGS_TAG) \
