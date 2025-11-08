@@ -1,17 +1,17 @@
-From b0892adf6ca139a899bc2427a8dbb8525f71d3fc Mon Sep 17 00:00:00 2001
+From 87c9e57548bc0aef15d67967a68cc9185216361d Mon Sep 17 00:00:00 2001
 From: Patrick Hunziker <patrick@hunziker.io>
-Date: Mon, 22 Sep 2025 18:55:42 +0200
+Date: Sat, 8 Nov 2025 11:31:15 +0100
 Subject: [PATCH] [PATCH] Patched for Raspberry Pi 5
 
 ---
- hack/modules-arm64.txt | 342 +++++++++++++++++++----------------------
- 1 file changed, 160 insertions(+), 182 deletions(-)
+ hack/modules-arm64.txt | 343 +++++++++++++++++++----------------------
+ 1 file changed, 160 insertions(+), 183 deletions(-)
 
 diff --git a/hack/modules-arm64.txt b/hack/modules-arm64.txt
-index 242f18c24..95c3ee669 100644
+index 6c48a7465..95c3ee669 100644
 --- a/hack/modules-arm64.txt
 +++ b/hack/modules-arm64.txt
-@@ -1,212 +1,190 @@
+@@ -1,213 +1,190 @@
 +modules.builtin.bin
 +modules.builtin.modinfo
 +modules.builtin.alias.bin
@@ -33,6 +33,7 @@ index 242f18c24..95c3ee669 100644
  kernel/crypto/async_tx/async_tx.ko
 -kernel/crypto/async_tx/async_xor.ko
 -kernel/crypto/xor.ko
+-kernel/drivers/acpi/video.ko
 -kernel/drivers/ata/ahci.ko
 -kernel/drivers/ata/pata_amd.ko
 -kernel/drivers/ata/pata_marvell.ko
