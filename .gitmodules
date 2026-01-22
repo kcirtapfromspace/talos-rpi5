@@ -5,7 +5,7 @@
 [submodule "checkouts/talos"]
 	path = checkouts/talos
 	url = https://github.com/siderolabs/talos
-	branch = v1.11.6
+	branch = v1.12.2
 [submodule "checkouts/sbc-raspberrypi5"]
 	path = checkouts/sbc-raspberrypi5
 	url = https://github.com/talos-rpi5/sbc-raspberrypi5
