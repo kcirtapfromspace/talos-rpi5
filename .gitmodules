@@ -1,7 +1,7 @@
 [submodule "checkouts/pkgs"]
 	path = checkouts/pkgs
 	url = https://github.com/siderolabs/pkgs
-	branch = v1.11.0
+	branch = v1.12.0
 [submodule "checkouts/talos"]
 	path = checkouts/talos
 	url = https://github.com/siderolabs/talos
