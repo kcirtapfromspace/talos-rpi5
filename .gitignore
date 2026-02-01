@@ -1,0 +1,26 @@
+# Build outputs (large binaries)
+_out/*.tar
+_out/*.zst
+_out/*.raw
+_out/*.log
+
+# Sensitive configuration files
+_out/worker.yaml
+_out/controlplane.yaml
+_out/talosconfig
+
+# Keep templates
+!_out/*.template
+
+# Editor and IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Plan files
+plan-*.md
